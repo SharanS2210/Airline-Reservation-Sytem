@@ -10,27 +10,10 @@ class booking:
         print("\t ------------------------------ \n")
         print()
         print("Press 1 for booking: ")
-        # print("\t ------------------------------ \n")
-        # print("\t Make Reservation    ...... '1' \n")
-        # print("\t ------------------------------ \n")
-        # print("\t Cancel Reservation  ...... '2' \n ")
-        # print("\t ------------------------------ \n")
-        # print("\t Search Passenger    ...... '3' \n")
-        # print("\t ------------------------------ \n")
-        # print("\t Change Reservation  ...... '4' \n")
-        # print("\t ------------------------------ \n")
-        # print("\t Print a list        ...... '5' \n")
-        # print("\t ------------------------------ \n")
-        # print("\t Print status Report ...... '6' \n ")
-        # print("\t ------------------------------ \n")
-        # print("\t Quit                ...... '7' \n ")
-        # print("\t ------------------------------ \n")
-        # print(":::::::::::::::::::::::::::::::::::::::::::::::\n")
-        # print("\n Option :: ")
         option=int(input())
         self.reservation(option)
 
-    def flightbooking(self,flightname,NoOfPassengers,From,To,Date):
+    def flightBooking(self,flightname,NoOfPassengers,From,To,Date):
         filename='passenger.csv'
         while NoOfPassengers!=0:
             FirstName=input("First Name - ")
@@ -41,9 +24,12 @@ class booking:
             SelectedSeat=int(input())
             flightname[SelectedSeat-1]=1
             pnr=random.randint(1111111111,9999999999)
-            with open(filename, 'a', newline="") as f:
-                writer=csv.writer(f, delimiter=",")
-                writer.writerow([FirstName,LastName,From,To,Date,Age,SelectedSeat,pnr])
+            try:
+                with open(filename, 'a', newline="") as f:
+                    writer=csv.writer(f, delimiter=",")
+                    writer.writerow([FirstName,LastName,From,To,Date,Age,SelectedSeat,pnr])
+            except FileNotFoundError:
+                print("Sorry, the file "+ filename +"does not exist.")
         print("*********************************************************")
         print("*********************************************************")
         print("               YOUR SEAT IS BOOKED!!!")
@@ -76,14 +62,14 @@ class booking:
             print("*********************************************************")
             flight=input("Select ur Flight - ")
             if flight=="Vistara":
-                self.flightbooking(Vistara,NoOfPassengers,From,To,Date)
+                self.flightBooking(Vistara,NoOfPassengers,From,To,Date)
             elif flight=="Indigo":
-                self.flightbooking(Indigo,NoOfPassengers,From,To,Date)
+                self.flightBooking(Indigo,NoOfPassengers,From,To,Date)
             elif flight=="goAir":
-                self.flightbooking(goAir,NoOfPassengers,From,To,Date)
+                self.flightBooking(goAir,NoOfPassengers,From,To,Date)
             elif flight=="Air Asia":
-                self.flightbooking(Airasia,NoOfPassengers,From,To,Date)
+                self.flightBooking(Airasia,NoOfPassengers,From,To,Date)
             elif flight=="Air India":
-                self.flightbooking(AirIndia,NoOfPassengers,From,To,Date)
+                self.flightBooking(AirIndia,NoOfPassengers,From,To,Date)
     
     

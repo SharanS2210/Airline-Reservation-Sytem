@@ -17,9 +17,12 @@ class Login_SignUp:
             pwd = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
             if re.match(pat,NewEmail) and re.match(pwd,NewPassword) and NewPassword==ConfirmPassword:
                 print("Thank You for Signing In")
-                with open(filename, 'a', newline="") as f:
-                    writer = csv.writer(f,delimiter=",")
-                    writer.writerow([NewEmail, NewPassword])
+                try:
+                    with open(filename, 'a', newline="") as f:
+                        writer = csv.writer(f,delimiter=",")
+                        writer.writerow([NewEmail, NewPassword])
+                except FileNotFoundError:
+                    print("Sorry, the file "+ filename +"does not exist.")
                 if self.Login():    
                     m=booking()
                     m.menu()
@@ -38,14 +41,17 @@ class Login_SignUp:
             if re.match(pat,email):
                 password=maskpass.askpass(prompt="Password:", mask="*")
                 pwd = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
-                with open("login.csv","r") as f:
-                    reader = csv.reader(f,delimiter=",")
-                    for row in reader:
-                        if re.match(pwd,password) and row == [email, password]:
-                            print("Email and Password are valid")
-                            m=booking()
-                            m.menu()
-                            # return True
+                try:
+                    with open("login.csv","r") as f:
+                        reader = csv.reader(f,delimiter=",")
+                        for row in reader:
+                            if re.match(pwd,password) and row == [email, password]:
+                                print("Email and Password are valid")
+                                m=booking()
+                                m.menu()
+                                # return True
+                except FileNotFoundError:
+                    print("Sorry, the file login.csv does not exist.")
             else:
                 print("*********************************************************")
                 print("               Wrong Username or Password")
